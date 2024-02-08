@@ -1,0 +1,15 @@
+{
+  "name": "@joy/natives-darwin-universal",
+  "version": "0.0.0",
+  "os": [
+    "darwin"
+  ],
+  "main": "natives.darwin-universal.node",
+  "files": [
+    "natives.darwin-universal.node"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  }
+}

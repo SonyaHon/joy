@@ -1,0 +1,15 @@
+{
+  "name": "@joy/prettier-config",
+  "version": "1.0.0",
+  "description": "A prettier-configuration for @joy/* projects",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo Done"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "~20.11.16",
+    "prettier": "~3.2.5"
+  }
+}

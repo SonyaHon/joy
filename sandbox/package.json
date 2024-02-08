@@ -1,0 +1,23 @@
+{
+  "name": "@joy/sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@joy/engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@joy/eslint-config": "workspace:*",
+    "@joy/prettier-config": "workspace:*",
+    "typescript": "~5.3.3",
+    "webpack": "~5.90.1",
+    "webpack-cli": "~5.1.4",
+    "@types/node": "~20.11.16",
+    "ts-loader": "~9.5.1"
+  }
+}
