@@ -148,4 +148,15 @@ export class Vector3 {
     this.z = lerp(this.z, to.z, t, fn)
     return this
   }
+
+  static scale(v: Vector3, scalar: number) {
+    return new Vector3(v.x * scalar, v.y * scalar, v.z * scalar)
+  }
+
+  scale(scalar: number) {
+    this.x *= scalar
+    this.y *= scalar
+    this.z *= scalar
+    return this
+  }
 }

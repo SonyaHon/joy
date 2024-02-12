@@ -17,7 +17,7 @@ import {
   joyGlUseProgram,
 } from '@joy/natives'
 import { logger } from './logger'
-import { Matrix4x4f, Vector2, Vector3, Vector4 } from './math'
+import { Matrix4f, Vector2, Vector3 } from './math'
 
 export interface ShaderSource {
   vertex: string
@@ -108,10 +108,10 @@ export class Shader {
       vector3(value: Vector3) {
         joyGlSetUniform3F(loc, value.x, value.y, value.z)
       },
-      vector4(value: Vector4) {
-        joyGlSetUniform4F(loc, value.x, value.y, value.z, value.w)
+      vector4(x: number, y: number, z: number, w: number) {
+        joyGlSetUniform4F(loc, x, y, z, w)
       },
-      matrix4x4(value: Matrix4x4f) {
+      matrix4x4(value: Matrix4f) {
         joyGlSetUniformMatrix4Fv(loc, false, value.raw())
       },
     }

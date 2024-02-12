@@ -1,7 +1,8 @@
-import { Matrix4x4f, Vector3 } from './math'
+import { Matrix4f, Vector3 } from './math'
+import { degreesToRadians } from './math/functions'
 
 export class Transform {
-  private _matrixCache: Matrix4x4f | null = null
+  private _matrixCache: Matrix4f | null = null
 
   constructor(
     public position: Vector3 = Vector3.zero(),
@@ -14,9 +15,11 @@ export class Transform {
       return this._matrixCache
     }
 
-    this._matrixCache = Matrix4x4f.identity()
+    this._matrixCache = Matrix4f.identity()
       .translate(this.position)
-      .rotate(this.rotation)
+      .rotate(degreesToRadians(this.rotation.x), Vector3.right())
+      .rotate(degreesToRadians(this.rotation.y), Vector3.up())
+      .rotate(degreesToRadians(this.rotation.z), Vector3.forward())
       .scale(this.scale)
     return this._matrixCache
   }

@@ -17,10 +17,12 @@ export default {
   fragment: `
     #version 410 core
 
+    uniform vec4 uColor = vec4(1, 0, 1, 1);
+
     out vec4 FragColor;
 
     void main() {
-      FragColor = vec4(1, 0, 0, 1);
+      FragColor = uColor;
     }
 `,
 } as ShaderSource

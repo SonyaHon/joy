@@ -1,28 +1,41 @@
-import Joy, { GeometryData, Color, Transform, Vector3 } from '@joy/engine'
+import Joy, {
+  GeometryData,
+  Color,
+  Transform,
+  Vector3,
+  logger,
+  GameObject,
+  Material,
+  Mesh,
+} from '@joy/engine'
 
 async function main() {
-  let geometry: GeometryData
-  let transform: Transform = new Transform(new Vector3(0, 0, 0))
+  let cubes: GameObject[] = new Array(3)
 
   Joy.onInitialize(async () => {
-    geometry = GeometryData.cube()
-
     Joy.setClearColor(Color.fromHex('#efefef'))
-    Joy.camera3d.setPosition(new Vector3(0, 0, 10))
+
+    for (let i = 0; i < 3; i++) {
+      cubes[i] = new GameObject()
+      cubes[i].addComponent(
+        new Material(Joy.shader.standard, {
+          solidColor: Color.fromHex('#0055ff'),
+        })
+      )
+      cubes[i].addComponent(new Mesh(GeometryData.cube()))
+      cubes[i].transform.setPosition(new Vector3(0, 0, i * 4))
+    }
+
+    Joy.camera3d.setPosition(new Vector3(0, 20, 20)).lookAt(Vector3.zero())
+
   })
 
   Joy.onUpdate(() => {
-    // transform.rotate(Vector3.unit(Joy.time.deltaTime))
-    // Joy.camera3d.translateZ(2 * Joy.time.deltaTime)
-    Joy.camera3d.rotateY(1 * Joy.time.deltaTime)
   })
 
   Joy.onRender(() => {
-    Joy.$internal$__getRenderer().renderGeometryData(
-      geometry,
-      Joy.shader.standard,
-      transform
-    )
+    const renderer = Joy.$internal$__getRenderer()
+    cubes.forEach((cube) => renderer.renderGameObject(cube))
   })
 
   await Joy.run()

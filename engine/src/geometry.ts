@@ -106,4 +106,11 @@ export class GeometryData {
       ]
     )
   }
+
+  static plane(unit: number = 1) {
+    return GeometryData.from(
+      [-1, 0, 1, 1, 0, 1, -1, 0, -1, 1, 0, -1].map((x) => x * unit),
+      [0, 1, 2, 2, 1, 3]
+    )
+  }
 }

@@ -3,6 +3,10 @@ export class JoyLogger {
     console.trace(message, data)
   }
 
+  debug(message: string, data?: Record<string, any> | Error) {
+    console.debug(message, data)
+  }
+
   error(message: string, data?: Record<string, any> | Error) {
     console.error(message, data)
   }

@@ -7,14 +7,43 @@ import {
 import { GeometryData } from './geometry'
 import { Shader } from './shader'
 import { Transform } from './transform'
-import { Matrix4x4f } from './math'
+import { Matrix4f } from './math'
 import { Camera3d } from './camera'
+import { GameObject, Mesh, Material } from './game-object'
 
 export class Renderer {
   constructor(
-    private readonly projectionMatrix: Matrix4x4f,
+    private readonly projectionMatrix: Matrix4f,
     private readonly camera: Camera3d
   ) {}
+
+  renderGameObject(object: GameObject) {
+    const mesh = object.getComponent<Mesh>(Mesh)
+    const material = object.getComponent<Material>(Material)
+
+    if (!mesh || !material) {
+      return
+    }
+
+    material.apply(
+      this.projectionMatrix,
+      this.camera.viewMatrix(),
+      object.transform.modelMatrix()
+    )
+
+    mesh.bind()
+
+    if (mesh.geometryData.indexed) {
+      joyGlDrawElements(
+        GL_TRIANGLES,
+        mesh.geometryData.vertexCount,
+        GL_UNSIGNED_INT,
+        0
+      )
+    } else {
+      joyGlDrawArrays(GL_TRIANGLES, 0, mesh.geometryData.vertexCount)
+    }
+  }
 
   renderGeometryData(
     geometryData: GeometryData,

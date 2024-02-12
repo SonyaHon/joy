@@ -37,7 +37,7 @@ import { Shader } from './shader'
 import standardShader from './shaders/standard'
 import { Renderer } from './renderer'
 import { Color } from './color'
-import { Matrix4x4f } from './math'
+import { Matrix4f } from './math'
 import { Camera3d } from './camera'
 
 export class JoyEngine {
@@ -192,15 +192,13 @@ export class JoyEngine {
   }
 
   public $internal$__getRenderer() {
-    return new Renderer(
-      Matrix4x4f.perspective(
-        75.0,
-        this._windowWidth / this._windowHeight,
-        0.001,
-        1000.0
-      ),
-      this.camera3d,
+    const projectionMatrix = new Matrix4f().perspective(
+      75.0,
+      this._windowWidth / this._windowHeight,
+      0.001,
+      1000.0
     )
+    return new Renderer(projectionMatrix, this.camera3d)
   }
 }
 

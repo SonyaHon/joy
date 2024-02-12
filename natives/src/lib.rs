@@ -98,6 +98,7 @@ fn joy_glfw_make_context_current(window: External<*mut GLFWwindow>) {
     });
     gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
     gl::Enable(gl::BLEND);
+    gl::Enable(gl::DEPTH_TEST);
   }
 }
 

@@ -1,8 +1,9 @@
 import { logger } from './logger'
-import { Matrix4x4f, Vector3 } from './math'
+import { Matrix4f, Vector3 } from './math'
+import { degreesToRadians, radiansToDegrees } from './math/functions'
 
 export class Camera3d {
-  private _matrixCache: Matrix4x4f | null = null
+  private _matrixCache: Matrix4f | null = null
 
   constructor(
     public position: Vector3 = Vector3.zero(),
@@ -14,15 +15,16 @@ export class Camera3d {
       return this._matrixCache
     }
 
-    this._matrixCache = Matrix4x4f.identity()
-      .rotate(this.rotation)
-      .translate(this.position.multiply(-1))
-    
+    this._matrixCache = Matrix4f.identity()
+      .rotate(degreesToRadians(this.rotation.x), Vector3.right())
+      .rotate(degreesToRadians(this.rotation.y), Vector3.up())
+      .translate(new Vector3(-this.position.x, -this.position.y, -this.position.z))
+
     return this._matrixCache
   }
 
   translate(v: Vector3): this {
-    this.position.addMut(v)
+    this.position.add(v)
     this._matrixCache = null
     return this
   }
@@ -52,7 +54,7 @@ export class Camera3d {
   }
 
   rotate(v: Vector3): this {
-    this.rotation.addMut(v)
+    this.rotation.add(v)
     this._matrixCache = null
     return this
   }
@@ -82,30 +84,20 @@ export class Camera3d {
   }
 
   lookAt(target: Vector3, up: Vector3 = Vector3.up()) {
-    const forward = this.position.subtract(target).normalizeMut()
-    const right = Vector3.cross(forward, up).normalizeMut()
-    up = Vector3.cross(right, forward).normalizeMut()
+    const direction = Vector3.subtract(this.position, target).normalize()
+    const right = Vector3.cross(up, direction).normalize()
+    up = Vector3.cross(direction, right).normalize()
 
-    const mat = new Matrix4x4f(
-      right.x,
-      right.y,
-      right.z,
-      0,
-      up.x,
-      up.y,
-      up.z,
-      0,
-      forward.x,
-      forward.y,
-      forward.z,
-      0,
-      this.position.x,
-      this.position.y,
-      this.position.z,
-      1
+    const rotationX = Math.asin(direction.y)
+    const rotationY = Math.atan2(direction.x, direction.z)
+    const rotationZ = Math.atan2(right.y, up.y)
+
+    this.rotation = new Vector3(
+      radiansToDegrees(rotationX),
+      radiansToDegrees(rotationY),
+      radiansToDegrees(rotationZ)
     )
-
-    this.rotation = mat.rotationAsVec3()
     this._matrixCache = null
+    return this
   }
 }

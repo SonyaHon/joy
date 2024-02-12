@@ -10,5 +10,6 @@ export { GeometryData } from './geometry'
 export { Color } from './color'
 export { Transform } from './transform'
 export * from './math'
+export { GameObject, Mesh, Material } from './game-object'
 
 export default Joy
