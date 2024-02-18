@@ -97,7 +97,7 @@ export class Camera3d {
             radiansToDegrees(rotationY),
             radiansToDegrees(rotationZ)
         )
-        logger.debug('Camera3d.lookAt', this.rotation)
+
         this._matrixCache = null
         return this
     }

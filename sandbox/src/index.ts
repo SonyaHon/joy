@@ -1,4 +1,4 @@
-import Joy, {Color, GameObject, GeometryData, logger, Material, Mesh, Vector3,} from '@joy/engine'
+import Joy, {Color, CursorMode, GameObject, GeometryData, logger, Material, Mesh, Vector3,} from '@joy/engine'
 
 const colors = [
     "#0055ff",
@@ -23,24 +23,19 @@ async function main() {
             cubes[i].transform.setPosition(new Vector3(0, -4 + i * 4, 0))
         }
 
-        Joy.camera3d.setPosition(new Vector3(20, 20, 20)).lookAt(Vector3.zero())
+        Joy.setWindowCursorMode(CursorMode.Disabled)
+        Joy.camera3d.setPosition(new Vector3(0, 0, 50)).lookAt(Vector3.zero())
     })
 
     Joy.onUpdate(() => {
+        // camera updates
+        const mouseDelta = Joy.input.getMouseDelta()
+        Joy.camera3d.rotate(new Vector3(mouseDelta.y, mouseDelta.x, 0).scale(0.1))
+
+        // cubes updates
         cubes.forEach((cube) => {
             cube.transform
                 .rotate(Vector3.unit(Joy.time.deltaTime * 20))
-                // .setPosition(
-                //     new Vector3(
-                //         Math.sin(
-                //             Joy.time.elapsedTotal + cube.transform.position.x
-                //         ),
-                //         cube.transform.position.y,
-                //         Math.cos(
-                //             Joy.time.elapsedTotal + cube.transform.position.z
-                //         )
-                //     )
-                // )
         })
     })
 
