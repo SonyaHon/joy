@@ -1,5 +1,4 @@
 import {degreesToRadians, Matrix4f, radiansToDegrees, Vector3} from './math'
-import {logger} from "./logger";
 
 export class Camera3d {
     private _matrixCache: Matrix4f | null = null

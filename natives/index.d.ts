@@ -91,3 +91,6 @@ export function joyGlfwSetWindowCloseCallback(window: ExternalObject<any>, callb
 export function joyGlfwGetTime(): number
 export function joyGlfwSetTime(time: number): void
 export function joyGlfwDestroyWindow(window: ExternalObject<any>): void
+export function joyGlfwSetKeyCallback(window: ExternalObject<any>, callback: (key: number, scancode: number, action: number, mods: number) => void): void
+export function joyGlfwSetCursorMoveCallback(window: ExternalObject<any>, callback: (xpos: number, ypos: number) => void): void
+export function joyGlfwSetCursorMode(window: ExternalObject<any>, mode: number): void
